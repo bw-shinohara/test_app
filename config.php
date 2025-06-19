@@ -17,3 +17,8 @@ function errorHandler($errNo, $errStr, $errFile, $errLine)
 
     return false;
 }
+
+// 以下を追記
+define('DSN', 'mysql:dbname=php_lesson;host=localhost;unix_socket=/tmp/mysql.sock');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'YosukeNewWord123!'); 
