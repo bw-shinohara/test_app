@@ -20,3 +20,11 @@ function connectPdo()
 // new PDO() が内部で自動的に例外（PDOException）をスローするため
 
 // PDO専用のエラーだけを扱うため。より細かく正確なエラーハンドリングができる
+
+
+function createTodoData($todoText)
+{
+    $dbh = connectPdo();
+    $sql = 'INSERT INTO todos (content) VALUES ("' . $todoText . '")';
+    $dbh->query($sql);
+}
