@@ -28,3 +28,10 @@ function createTodoData($todoText)
     $sql = 'INSERT INTO todos (content) VALUES ("' . $todoText . '")';
     $dbh->query($sql);
 }
+
+function getAllRecords()
+{
+    $dbh = connectPdo();
+    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL';
+    return $dbh->query($sql)->fetchAll();
+}

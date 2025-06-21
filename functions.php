@@ -7,9 +7,13 @@ function createData($post)
 }
 
 
-require_once('functions.php');
+// require_once('functions.php');
 
-createData($_POST);
-header('Location: ./index.html');
+// createData($_POST);
+// header('Location: ./index.php');
 
 
+function getTodoList()
+{
+    return getAllRecords();
+}
