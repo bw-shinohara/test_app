@@ -16,6 +16,8 @@ $_POSTは、PHPが最初から用意してくれている「スーパーグロ�
 HTMLフォームでmethod="post"として送信されたデータを受け取るための連想配列 -->
     <input type="submit" value="作成">
   </form>
+
+
   <div>
     <a href="index.php">一覧へもどる</a>
   </div>

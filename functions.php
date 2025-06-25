@@ -2,7 +2,7 @@
 // データの受け取り・受け渡し
 require_once('connection.php');
 
-// $postには、が格納されている。
+// $postには、$_POSTが格納されている。
 function createData($post)
 {
   createTodoData($post['content']); 
