@@ -12,16 +12,13 @@ function connectPdo()
     }
 }
 // 例外を発生させる処理が書いていない
+// ⇒new PDO() が内部で自動的に例外（PDOException）をスローするため
+
 // catchの引数がExceptionではなくPDOExceptionという別のクラスになっている。
-// なぜ上記のようになっているのかはレビューの際に確認しますので、まずは自分で調べたり仮説を立てたりして説明できるよう準備をしておきましょう。
+// ⇒PDO専用のエラーだけを扱うため。より細かく正確なエラーハンドリングができる
 
 
-
-// new PDO() が内部で自動的に例外（PDOException）をスローするため
-
-// PDO専用のエラーだけを扱うため。より細かく正確なエラーハンドリングができる
-
-
+// DBへの操作
 function createTodoData($todoText)
 {
     $dbh = connectPdo();
@@ -29,9 +26,14 @@ function createTodoData($todoText)
     $dbh->query($sql);
 }
 
+// データの取得
 function getAllRecords()
 {
     $dbh = connectPdo();
+    
+    // データ取得処理なので、SELECT文を使用します
+    // todosテーブルから、削除されていない（deleted_at カラムが NULLである）
+    // レコードを全件取得する
     $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL';
     return $dbh->query($sql)->fetchAll();
 }
