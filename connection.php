@@ -80,3 +80,40 @@ function getAllRecords()
     
 }
 // getAllRecords()はfunctions.phpにて呼び出しが必要
+
+
+
+
+// 更新処理
+function updateTodoData($post)
+{
+    $dbh = connectPdo();
+    $sql = 'UPDATE todos SET content = "' . $post['content'] . '" WHERE id = ' . $post['id'];
+    $dbh->query($sql);
+}
+
+function getTodoTextById($id)
+{
+    $dbh = connectPdo();
+    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL AND id = ' .  $id;
+    // var_dump($sql);
+    // exit();
+    $data = $dbh->query($sql)->fetch();
+    return $data['content'];
+}
+
+
+
+
+
+// 論理削除のDB処理
+function deleteTodoData($id)
+{
+    $dbh = connectPdo();
+    $now = date('Y-m-d H:i:s');
+    /* ここの処理を考えて記述してください。 */
+    $sql = 'UPDATE todos SET deleted_at = "ヌルじゃなくなった！" WHERE id = ' . $id;
+    $data = $dbh->query($sql)->fetch();
+
+
+}

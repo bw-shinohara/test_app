@@ -35,12 +35,12 @@ require_once('functions.php'); //追記
           <td><?= $todo['content']; ?></td>
           <td>
             <!-- 更新ボタン用リンク -->
-            <a href="">更新</a>
+            <a href="edit.php?id=<?= $todo['id']; ?>">更新</a>
           </td>
           <td>
             <!-- 削除用フォーム -->
             <form action="store.php" method="post">
-              <input type="hidden" name="id" value="">
+              <input type="hidden" name="id" value="<?= $todo['id']; ?>">
               <button type="submit">削除</button>
             </form>
           </td>
