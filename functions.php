@@ -5,7 +5,9 @@ require_once('connection.php');
 // $postには、$_POSTが格納されている。
 function createData($post)
 {
-  createTodoData($post['content']); 
+//   var_dump($post);
+// exit();
+createTodoData($post['content']); 
   // これでデータが創り出され、DBに渡される
 }
 

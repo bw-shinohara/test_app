@@ -26,13 +26,19 @@ require_once('functions.php'); //追記
       </tr>
        <!-- ↓ここから追記 -->
       <?php foreach (getTodoList() as $todo): ?>
+        <!-- getTodoList() as $todo
+         asの左辺は全体リスト　右辺はその中の一つ
+         fetchAllでtodo全件分ある　右辺には左辺からキーとバリューが代入されている。　
+        -->
         <tr>
           <td><?= $todo['id']; ?></td>
           <td><?= $todo['content']; ?></td>
           <td>
+            <!-- 更新ボタン用リンク -->
             <a href="">更新</a>
           </td>
           <td>
+            <!-- 削除用フォーム -->
             <form action="store.php" method="post">
               <input type="hidden" name="id" value="">
               <button type="submit">削除</button>

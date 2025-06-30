@@ -12,5 +12,6 @@ createData($_POST);
 // value属性がバリューとなるような連想配列として
 // $_POSTに格納される
 
+// createData関数を実行した結果がリダイレクトされる
 header('Location: ./index.php');
 exit;
