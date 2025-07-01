@@ -15,6 +15,6 @@ require_once('functions.php');
 
 savePostedData($_POST); // 追記
 
-// createData関数を実行した結果がリダイレクトされる
+// savePostedData関数を実行した結果がリダイレクトされる
 header('Location: ./index.php');
 exit;

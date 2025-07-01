@@ -1,5 +1,5 @@
 <?php //追記
-require_once('functions.php'); //追記
+require_once('functions.php'); //あくまで関数参照のため　下に拡張されているだけ
 ?> 
 <!-- 追記 -->
 

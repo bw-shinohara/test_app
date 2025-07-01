@@ -23,13 +23,22 @@ function savePostedData($post)
     switch ($path) {
         case '/new.php':
             createTodoData($post['content']);
+            // var_dump();
+            // exit();
             break;
+
         case '/edit.php':
             updateTodoData($post);
+            // var_dump($post);
+            // exit();
             break;
+
         case '/index.php': // 追記
             deleteTodoData($post['id']); // 追記
+            // var_dump();
+            // exit();
             break; // 追記
+            
         default:
             break;
     }
@@ -38,8 +47,13 @@ function savePostedData($post)
 function getRefererPath()
 {
     $urlArray = parse_url($_SERVER['HTTP_REFERER']);
+    // $_SERVER['HTTP_REFERER']は、「直前のページのURL」が入っているサーバー変数
+    // parse_url() 関数はPHPが最初から用意している「組み込み関数（ビルトイン関数）」
+    // URL を解釈し、その構成要素を返す
     // var_dump($urlArray);
     // exit();
+
+    // 連想配列からキーであるpathを返す
     return $urlArray['path'];
     
 }
@@ -55,7 +69,9 @@ function getTodoList()
 
 // $_GET['id'] でURLクエリパラメータ（index.phpでURLのパラメータとして渡したid）を取得し、
 // それをそのままfunctions.phpのgetSelectedTodo関数に渡してます。
+// 現在保存されているTODOの内容を返す
 function getSelectedTodo($id)
+// edit.phpで呼び出し実行。
 {
     return getTodoTextById($id); 
 }

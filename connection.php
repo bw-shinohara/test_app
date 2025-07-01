@@ -87,11 +87,23 @@ function getAllRecords()
 // 更新処理
 function updateTodoData($post)
 {
+    // var_dump($post);
+    // exit();
     $dbh = connectPdo();
     $sql = 'UPDATE todos SET content = "' . $post['content'] . '" WHERE id = ' . $post['id'];
     $dbh->query($sql);
+    $stsm = $dbh->query($sql);
+    var_dump($stsm);
+    exit();
+
+    // queryメソッドの返り値は？？？？
+    // PDOStatement オブジェクト　　PDOStatementクラスのインスタンス
 }
 
+
+// $_GET['id'] でURLクエリパラメータ（index.phpでURLのパラメータとして渡したid）を取得し、
+// それをそのままfunctions.phpのgetSelectedTodo関数に渡してます。
+// （更新前の）現在保存されているTODOの内容を返す
 function getTodoTextById($id)
 {
     $dbh = connectPdo();
@@ -99,8 +111,30 @@ function getTodoTextById($id)
     // var_dump($sql);
     // exit();
     $data = $dbh->query($sql)->fetch();
+    // 今回は全件じゃない
+    // var_dump($data);
+    // exit();
+
+    // $dataの連想配列から内容であるcontentだけを返す
     return $data['content'];
 }
+
+// fetch();の返り値は？
+// 以下のような1行の連想配列である。
+// [
+//   'id' => 3,
+//   'content' => '例：牛乳を買う',
+//   'deleted_at' => null
+// ]
+
+// なんでわざわざfetchAllじゃなくてfetch();にしてる？
+// fetchAllにすると以下のエラーが起こる
+// 例　：　Warning: Undefined array key "content" in C:\Users\ysk4n\OneDrive\Desktop\test_app\connection.php on line 121
+// 未定義の配列
+
+// fetch　[ 'id' => 3, 'content' => '牛乳を買う' ]　　　　　　1次元
+// fetchAll　[ [ 'id' => 1, ... ], [ 'id' => 2, ... ] ]　　　多次元
+
 
 
 
@@ -112,8 +146,9 @@ function deleteTodoData($id)
     $dbh = connectPdo();
     $now = date('Y-m-d H:i:s');
     /* ここの処理を考えて記述してください。 */
-    $sql = 'UPDATE todos SET deleted_at = "ヌルじゃなくなった！" WHERE id = ' . $id;
-    $data = $dbh->query($sql)->fetch();
-
+    $sql = 'UPDATE todos SET deleted_at = "' . $now . '" WHERE id = ' . $id;
+    $data = $dbh->query($sql);
+    // var_dump($data);
+    // exit();
 
 }
