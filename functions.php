@@ -2,6 +2,14 @@
 // データの受け取り・受け渡し
 require_once('connection.php');
 
+// エスケープ処理
+function e($text)
+{
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+
+session_start(); // 追記
+
 // $postには、$_POSTが格納されている。
 // function createData($post)//削除
 // {
@@ -15,11 +23,40 @@ require_once('connection.php');
   // これでデータが創り出され、DBに渡される
 // }
 
+// SESSIONにtokenを格納する
+function setToken()
+{
+    $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
+}
+
+// SESSIONに格納されたtokenのチェックを行い、SESSIONにエラー文を格納する
+function checkToken($token)
+{
+    if (empty($_SESSION['token']) || ($_SESSION['token'] !== $token)) {
+        $_SESSION['err'] = '不正な操作です';
+        redirectToPostedPage();
+    }
+}
+
+function unsetError()
+{
+    $_SESSION['err'] = '';
+}
+
+function redirectToPostedPage()
+{
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
+}
+
+
+
 
 
 function savePostedData($post)
 {
-    $path = getRefererPath();
+   checkToken($post['token']); // 追記 
+   $path = getRefererPath();
     switch ($path) {
         case '/new.php':
             createTodoData($post['content']);

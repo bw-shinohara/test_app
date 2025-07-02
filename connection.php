@@ -52,8 +52,11 @@ function createTodoData($todoText)
 
     // todoというテーブルにレコードを挿入する
     // contentカラムに入力された値を挿入する命令
-    $sql = 'INSERT INTO todos (content) VALUES ("' . $todoText . '")';
-    $dbh->query($sql);
+    $sql = 'INSERT INTO todos (content) VALUES (:todoText)'; //編集
+    $stmt = $dbh->prepare($sql); //追記
+    $stmt->bindValue(':todoText', $todoText, PDO::PARAM_STR); //追記
+    $stmt->execute(); //追記
+    // $dbh->query($sql);
 }
 
 
@@ -90,11 +93,12 @@ function updateTodoData($post)
     // var_dump($post);
     // exit();
     $dbh = connectPdo();
-    $sql = 'UPDATE todos SET content = "' . $post['content'] . '" WHERE id = ' . $post['id'];
-    $dbh->query($sql);
-    $stsm = $dbh->query($sql);
-    var_dump($stsm);
-    exit();
+    $sql =  'UPDATE todos SET content = :todoText WHERE id = :id'; //編集
+    $stmt = $dbh->prepare($sql); //編集
+    $stmt->bindValue(':todoText', $post['content'], PDO::PARAM_STR); //編集
+    $stmt->bindValue(':id', (int) $post['id'], PDO::PARAM_INT); //編集
+    $stmt->execute(); //編集
+    // $dbh->query($sql);
 
     // queryメソッドの返り値は？？？？
     // PDOStatement オブジェクト　　PDOStatementクラスのインスタンス
@@ -107,16 +111,22 @@ function updateTodoData($post)
 function getTodoTextById($id)
 {
     $dbh = connectPdo();
-    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL AND id = ' .  $id;
+    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL AND id = :id';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $data = $stmt->fetch(); // 1件だけ取得
+
+    return $data ? $data['content'] : null; // データがなければnullを返す
     // var_dump($sql);
     // exit();
-    $data = $dbh->query($sql)->fetch();
+    // $data = $dbh->query($sql)->fetch();
     // 今回は全件じゃない
     // var_dump($data);
     // exit();
 
     // $dataの連想配列から内容であるcontentだけを返す
-    return $data['content'];
+    // return $data['content'];
 }
 
 // fetch();の返り値は？
@@ -146,8 +156,12 @@ function deleteTodoData($id)
     $dbh = connectPdo();
     $now = date('Y-m-d H:i:s');
     /* ここの処理を考えて記述してください。 */
-    $sql = 'UPDATE todos SET deleted_at = "' . $now . '" WHERE id = ' . $id;
-    $data = $dbh->query($sql);
+    $sql = 'UPDATE todos SET deleted_at = :deleted_at WHERE id = :id';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':deleted_at', $now, PDO::PARAM_STR);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    // $data = $dbh->query($sql);
     // var_dump($data);
     // exit();
 

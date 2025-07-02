@@ -17,4 +17,4 @@ savePostedData($_POST); // 追記
 
 // savePostedData関数を実行した結果がリダイレクトされる
 header('Location: ./index.php');
-exit;
+exit();

