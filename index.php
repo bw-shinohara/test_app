@@ -55,5 +55,6 @@ setToken(); //追記
        <!-- ↑ここまで -->
     </table>
   </div>
+  <?php unsetError(); ?> 
 </body>
 </html>

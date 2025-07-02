@@ -33,6 +33,6 @@ $todo = getSelectedTodo($_GET['id']);
   <div>
     <a href="index.php">一覧へもどる</a>
   </div>
-    <?php unsetError(); ?> 
+  <?php unsetError(); ?> 
 </body>
 </html>

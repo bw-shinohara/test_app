@@ -2,13 +2,14 @@
 // データの受け取り・受け渡し
 require_once('connection.php');
 
+session_start(); // 追記
+
 // エスケープ処理
 function e($text)
 {
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
 
-session_start(); // 追記
 
 // $postには、$_POSTが格納されている。
 // function createData($post)//削除
@@ -55,7 +56,8 @@ function redirectToPostedPage()
 
 function savePostedData($post)
 {
-   checkToken($post['token']); // 追記 
+   checkToken($post['token']); 
+   validate($post); // 追記
    $path = getRefererPath();
     switch ($path) {
         case '/new.php':
@@ -78,6 +80,15 @@ function savePostedData($post)
             
         default:
             break;
+    }
+}
+
+// 追記
+function validate($post)
+{
+    if (isset($post['content']) && $post['content'] === '') {
+        $_SESSION['err'] = '入力がありません';
+        redirectToPostedPage();
     }
 }
 
